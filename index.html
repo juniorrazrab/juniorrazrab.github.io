@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Портфолио Python-разработчика</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: left-aligned hero with a bot-chat demo beside it; sections are rows with a mono label column and content column. */
+:root {
+  --bg: #F2F5F7;
+  --surface: #FFFFFF;
+  --fg: #10171D;
+  --muted: #55636E;
+  --line: #D5DDE3;
+  --accent: #0A6FB8;
+  --accent-fg: #FFFFFF;
+  --bubble-user: #DCEBF6;
+  --bubble-bot: #FFFFFF;
+  --note-bg: #E6F1F9;
+  --font-display: 'Unbounded', 'Onest', system-ui, sans-serif;
+  --font-body: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1419;
+    --surface: #161E25;
+    --fg: #E8EEF2;
+    --muted: #93A1AC;
+    --line: #26323B;
+    --accent: #5BB8F2;
+    --accent-fg: #06121B;
+    --bubble-user: #1D3447;
+    --bubble-bot: #1B252D;
+    --note-bg: #12283A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1419;
+  --surface: #161E25;
+  --fg: #E8EEF2;
+  --muted: #93A1AC;
+  --line: #26323B;
+  --accent: #5BB8F2;
+  --accent-fg: #06121B;
+  --bubble-user: #1D3447;
+  --bubble-bot: #1B252D;
+  --note-bg: #12283A;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1040px; margin-inline: auto; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* top bar */
+.top {
+  display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between;
+  padding-block: 20px; border-bottom: 1px solid var(--line);
+}
+.brand { font-family: var(--font-mono); font-size: 14px; font-weight: 500; letter-spacing: .02em; }
+.brand span { color: var(--accent); }
+.chip {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em;
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  padding: 5px 10px; border-radius: 999px; display: inline-block;
+}
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 40px; padding-block: 56px 48px; align-items: center; }
+.eyebrow { font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 16px; }
+h1 {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 5vw, 46px);
+  line-height: 1.15; margin: 0 0 20px; text-wrap: balance;
+}
+.lead { font-size: 18px; color: var(--muted); max-width: 52ch; margin: 0 0 28px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  font-family: var(--font-body); font-weight: 600; font-size: 15px; text-decoration: none;
+  padding: 12px 20px; border-radius: 8px; border: 1px solid var(--accent); display: inline-block; cursor: pointer;
+}
+.btn-primary { background: var(--accent); color: var(--accent-fg); }
+.btn-ghost { background: transparent; color: var(--accent); }
+
+/* chat demo */
+.chat { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; min-width: 0; }
+.chat-head { display: flex; justify-content: space-between; gap: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.msgs { display: flex; flex-direction: column; gap: 10px; }
+.msg { max-width: 88%; padding: 9px 13px; border-radius: 14px; font-size: 14.5px; line-height: 1.45; border: 1px solid var(--line); overflow-wrap: anywhere; }
+.msg.user { align-self: flex-end; background: var(--bubble-user); border-bottom-right-radius: 4px; font-family: var(--font-mono); font-size: 13.5px; }
+.msg.bot { align-self: flex-start; background: var(--bubble-bot); border-bottom-left-radius: 4px; }
+.chat-foot { margin: 14px 0 0; font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+
+/* disclosure note */
+.note {
+  background: var(--note-bg); border: 1px solid var(--line); border-radius: 10px;
+  padding: 16px 20px; margin-bottom: 8px; display: grid; gap: 4px;
+}
+.note strong { font-weight: 600; }
+.note p { margin: 0; color: var(--muted); }
+
+/* sections */
+.row { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 16px 40px; padding-block: 48px; border-top: 1px solid var(--line); }
+.label { font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 6px 0 0; }
+h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(20px, 3vw, 26px); line-height: 1.25; margin: 0 0 20px; text-wrap: balance; }
+.content { min-width: 0; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 0; }
+.card h3 { font-size: 17px; margin: 0 0 8px; font-weight: 600; }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.skills { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0; }
+.skills li {
+  font-family: var(--font-mono); font-size: 14px; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px;
+}
+.skills li.main { border-color: var(--accent); color: var(--accent); }
+
+.points { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; max-width: 62ch; }
+.points li { padding-left: 20px; position: relative; }
+.points li::before { content: ""; position: absolute; left: 0; top: .7em; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
+
+.project { border-style: dashed; display: grid; gap: 12px; align-content: start; }
+.project .tag { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--muted); }
+
+/* contact */
+.contact-box { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.handle {
+  font-family: var(--font-mono); font-size: 16px; background: var(--surface); border: 1px solid var(--line);
+  padding: 11px 16px; border-radius: 8px; user-select: all; overflow-wrap: anywhere;
+}
+.hint { color: var(--muted); font-size: 14px; margin: 14px 0 0; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: minmax(0, 1fr); padding-block: 36px 32px; gap: 32px; }
+  .row { grid-template-columns: minmax(0, 1fr); padding-block: 36px; gap: 4px; }
+  .label { margin: 0 0 8px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: transform .15s ease; }
+  .btn:hover { transform: translateY(-1px); }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span>&gt;</span> Егор / python-dev</div>
+    <span class="chip">Сайт сделан с помощью ИИ</span>
+  </header>
+
+  <section class="hero" aria-labelledby="h-title">
+    <div>
+      <p class="eyebrow">Junior Python developer</p>
+      <h1 id="h-title">Пишу Telegram-ботов и игры внутри них на Python</h1>
+      <p class="lead">Я джуниор-разработчик. Запускаю ботов на хостинге и беру реальные проекты: зарабатываю и учусь на них одновременно.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#contact">Написать мне</a>
+        <a class="btn btn-ghost" href="#skills">Что я умею</a>
+      </div>
+    </div>
+
+    <div class="chat" aria-label="Пример диалога с ботом">
+      <div class="chat-head"><span>@your_bot</span><span>онлайн</span></div>
+      <div class="msgs">
+        <div class="msg user">/start</div>
+        <div class="msg bot">Привет! Выбери действие: меню, игра или связь с автором.</div>
+        <div class="msg user">Игра</div>
+        <div class="msg bot">Поехали! Первый раунд начинается прямо в этом чате.</div>
+      </div>
+      <p class="chat-foot">Пример диалога, не реальный бот</p>
+    </div>
+  </section>
+
+  <div class="note" role="note">
+    <strong>Как сделан этот сайт</strong>
+    <p>Страницу создал ИИ по моему заданию, а не я вручную. Я использую ИИ в разработке (вайбкодинг), и этот сайт показывает это честно.</p>
+  </div>
+
+  <section class="row" id="skills" aria-labelledby="h-skills">
+    <p class="label">Навыки</p>
+    <div class="content">
+      <h2 id="h-skills">С чем я работаю</h2>
+      <ul class="skills">
+        <li class="main">Python</li>
+        <li class="main">Telegram-боты</li>
+        <li>Игры внутри ботов</li>
+        <li>Запуск ботов на хостинге</li>
+        <li>Вайбкодинг с ИИ</li>
+        <li>Сайты</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="h-services">
+    <p class="label">Услуги</p>
+    <div class="content">
+      <h2 id="h-services">Что могу сделать для вас</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Telegram-бот под задачу</h3>
+          <p>Напишу бота на Python: меню, ответы, обработка заявок и другие сценарии под ваш проект.</p>
+        </article>
+        <article class="card">
+          <h3>Игра внутри бота</h3>
+          <p>Сделаю игровую механику прямо в чате Telegram, чтобы люди возвращались и играли.</p>
+        </article>
+        <article class="card">
+          <h3>Запуск на хостинге</h3>
+          <p>Выложу бота на хостинг, чтобы он работал круглосуточно, а не только на моём компьютере.</p>
+        </article>
+        <article class="card">
+          <h3>Сайт</h3>
+          <p>Соберу простой сайт: визитку или страницу для вашего проекта.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="h-way">
+    <p class="label">Как я работаю</p>
+    <div class="content">
+      <h2 id="h-way">Учусь на живых задачах</h2>
+      <ul class="points">
+        <li>Я зарабатываю на проектах и в то же время учусь: каждый заказ закрывает для меня новую тему.</li>
+        <li>Использую ИИ как рабочий инструмент, чтобы двигаться быстрее и пробовать больше решений.</li>
+        <li>Я джуниор, и говорю об этом прямо. Задачу и сроки обсудим до начала работы.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="row" aria-labelledby="h-projects">
+    <p class="label">Проекты</p>
+    <div class="content">
+      <h2 id="h-projects">Демо-проекты</h2>
+      <div class="grid">
+        <article class="card project">
+          <span class="tag">Демо-проект</span>
+          <h3>Бот-викторина</h3>
+          <p>Вопросы с кнопками ответа, подсчёт очков и таблица лидеров прямо в чате.</p>
+          <div class="tags"><span>Python</span><span>Telegram</span><span>Игра</span></div>
+        </article>
+        <article class="card project">
+          <span class="tag">Демо-проект</span>
+          <h3>Бот-напоминалка</h3>
+          <p>Человек пишет, о чём напомнить и когда, а бот присылает сообщение вовремя.</p>
+          <div class="tags"><span>Python</span><span>Telegram</span><span>Хостинг</span></div>
+        </article>
+        <article class="card project">
+          <span class="tag">Демо-проект</span>
+          <h3>Бот-визитка для бизнеса</h3>
+          <p>Меню с услугами и ценами, режим работы и форма заявки, которая приходит владельцу.</p>
+          <div class="tags"><span>Python</span><span>Telegram</span><span>Заявки</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" id="contact" aria-labelledby="h-contact">
+    <p class="label">Контакты</p>
+    <div class="content">
+      <h2 id="h-contact">Напишите, обсудим задачу</h2>
+      <div class="contact-box">
+        <span class="handle" id="handle">@Codeer1</span>
+        <a class="btn btn-primary" href="https://t.me/Codeer1" target="_blank" rel="noopener">Открыть в Telegram</a>
+        <button class="btn btn-ghost" type="button" id="copy">Скопировать ник</button>
+      </div>
+      <p class="hint" id="copy-status" aria-live="polite">Пишите в Telegram, отвечу и обсудим задачу.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Python · Telegram-боты · хостинг</span>
+    <span>Сайт создан с помощью ИИ (Claude)</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy');
+  var handle = document.getElementById('handle');
+  var status = document.getElementById('copy-status');
+  btn.addEventListener('click', function () {
+    var text = handle.textContent;
+    function fallback() {
+      var r = document.createRange();
+      r.selectNodeContents(handle);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+      status.textContent = 'Ник выделен, скопируйте его вручную.';
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () {
+        status.textContent = 'Скопировано: ' + text;
+      }, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+</body>
+</html>
